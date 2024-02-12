@@ -14,20 +14,20 @@ function reducer (state: State, action: Action) {
   if(type === 'INTERCHANGE_LANGUAGES') {
     return {
       ...state,
-      fromLanguages: state.toLanguage,
+      fromLanguage: state.toLanguage,
       toLanguages: state.fromLanguage
     }
   }
   if(type === 'SET_FROM_LANGUAGES') {
     return {
       ...state,
-      fromLanguages: action.payload
+      fromLanguage: action.payload
     }
   }
   if(type ==='SET_TO_LANGUAGES') {
     return {
       ...state,
-      toLanguages: action.payload
+      toLanguage: action.payload
     }
   }
   if(type === 'SET_USER_TEXT') {
@@ -53,21 +53,23 @@ function App() {
 
   const [{
     fromLanguage,
-    toLanguage,
-    userText,
-    resultText,
-    loading,
+    // toLanguage,
+    // userText,
+    // resultText,
+    // loading,
   }, dispatch] = useReducer(reducer, initialState)
 
-  console.log(fromLanguage)
+
   return (
     <main className="">
       <h1 className="text-center pt-10 text-2xl">
         Google Translate
       </h1>
-      <button onClick={() => {
-        dispatch({ type: 'SET_FROM_LANGUAGES', payload: 'es'})
+      <button className="border rounded-xl bg-sky-300 mr-6 p-2"
+        onClick={() => {
+        dispatch({ type: 'SET_FROM_LANGUAGES', payload: 'es' })
       }}>Cambiar Idioma</button>
+      {fromLanguage}
     </main>
   )
 }

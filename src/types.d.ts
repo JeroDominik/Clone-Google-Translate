@@ -1,3 +1,9 @@
+export type Language = 'English' | 'Español' | 'Deutsch'  | 'Italiano'
+
+export type AutoLanguage = 'Auto'
+
+export type FromLanguage = AutoLanguage | Language
+
 export interface State {
     fromLanguage : string,
     toLanguage : string,

@@ -1,9 +1,9 @@
-import { type State, type Action, FromLanguage, Language } from "../types"
+import { type State, type Action, FromLanguage, Language } from "../types.d"
 import { useReducer } from "react"
 
-const initialState = {
-  fromLanguage: 'auto',
-  toLanguage: 'en',
+const initialState: State = {
+  fromLanguage: 'Auto',
+  toLanguage: 'English',
   userText: '',
   resultText: '',
   loading: false
@@ -12,10 +12,11 @@ const initialState = {
 function reducer (state: State, action: Action) {
   const { type } = action
   if(type === 'INTERCHANGE_LANGUAGES') {
+    if(state.fromLanguage === 'Auto') return state
     return {
       ...state,
       fromLanguage: state.toLanguage,
-      toLanguages: state.fromLanguage
+      toLanguage: state.fromLanguage
     }
   }
   if(type === 'SET_FROM_LANGUAGES') {
@@ -35,7 +36,7 @@ function reducer (state: State, action: Action) {
       ...state,
       loading: true,
       userText: action.payload,
-      result: ''
+      resultText: ''
     }
   }
   if(type === 'SET_RESULT_TEXT') {

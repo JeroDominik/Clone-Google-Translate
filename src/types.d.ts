@@ -17,3 +17,8 @@ export type Action = {type: 'INTERCHANGE_LANGUAGES'}
     | {type: 'SET_TO_LANGUAGES', payload: Language}
     | {type: 'SET_USER_TEXT', payload: string}
     | {type: 'SET_RESULT_TEXT', payload: string}
+
+export enum SectionType  {
+    From = 'from',
+    To = 'to'
+}

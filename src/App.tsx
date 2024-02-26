@@ -4,9 +4,22 @@ import { IconArrows } from "./components/Icons"
 import { LanguageSelector } from "./components/LanguageSelector"
 import { SectionType } from "./types.d"
 import { TextSelector } from "./components/TextSelector"
+import { useEffect } from "react"
+import { Translate } from "./services/translate"
 
 function App() {
-  const { fromLanguage, toLanguage, resultText, userText, interchangeLanguages, setFromLanguages, setToLanguages, setUserText, setResultText } = useLanguages()
+  const { fromLanguage, toLanguage, resultText, userText, loading, interchangeLanguages, setFromLanguages, setToLanguages, setUserText, setResultText } = useLanguages()
+
+  useEffect (() => {
+    if(userText === '') return
+
+    Translate({fromLanguage, toLanguage, text: userText})
+    .then( resultText => {
+      if( resultText ) return setResultText(resultText)
+    })
+    .catch( () => {setResultText('Error')} )
+    
+  }, [userText, fromLanguage, toLanguage, setResultText])
 
   return (
     <main className="mx-auto w-[95%] pt-8 pb-20">
@@ -22,7 +35,6 @@ function App() {
             onChange={setFromLanguages} />
 
             <TextSelector
-              placeholder="Enter Text"
               type={SectionType.From}
               value={resultText}
               onChange={setResultText}
@@ -42,7 +54,7 @@ function App() {
             onChange={setToLanguages}/>
 
           <TextSelector
-            placeholder="Translation"
+            loading={loading}
             type={SectionType.To}
             value={userText}
             onChange={setUserText}

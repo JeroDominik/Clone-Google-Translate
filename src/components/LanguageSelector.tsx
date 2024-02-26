@@ -13,7 +13,7 @@ export const LanguageSelector = ( {onChange, type, value} : Props ) => {
     return(
         <form className="mx-auto">
             <select onChange={handleChange} value={value} aria-label="Select Language" className="bg-zinc-900 border border-gray-500 text-sky-300/70 text-base rounded-lg block w-64 py-3 px-5 placeholder:bg-zinc-900 focus:outline-none">
-                {type === SectionType.From && <option value="Auto">Detectar Idioma</option>}
+                {type === SectionType.From && <option value="Auto">Auto</option>}
                 <option value="English">English</option>
                 <option value="Español">Español</option>
                 <option value="Deutsch">Deutsch</option>

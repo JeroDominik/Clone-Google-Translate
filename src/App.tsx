@@ -1,4 +1,5 @@
 import { useLanguages } from "./customHook/useLanguages"
+import { useDebounce } from "./customHook/useDebounce"
 import { Header } from "./components/Header"
 import { IconArrows } from "./components/Icons"
 import { LanguageSelector } from "./components/LanguageSelector"
@@ -8,18 +9,21 @@ import { useEffect } from "react"
 import { Translate } from "./services/translate"
 
 function App() {
-  const { fromLanguage, toLanguage, resultText, userText, loading, interchangeLanguages, setFromLanguages, setToLanguages, setUserText, setResultText } = useLanguages()
+  const { fromLanguage, toLanguage, userText, resultText, loading, interchangeLanguages, setFromLanguages, setToLanguages, setUserText, setResultText } = useLanguages()
+
+  const debounceUserText = useDebounce(userText, 350)
 
   useEffect (() => {
-    if(userText === '') return
+    if(debounceUserText === '') return
 
-    Translate({fromLanguage, toLanguage, text: userText})
+    Translate({fromLanguage, toLanguage, text: debounceUserText})
     .then( resultText => {
       if( resultText ) return setResultText(resultText)
     })
     .catch( () => {setResultText('Error')} )
     
-  }, [userText, fromLanguage, toLanguage, setResultText])
+  }, [debounceUserText, fromLanguage, toLanguage, setResultText])
+
 
   return (
     <main className="mx-auto w-[95%] pt-8 pb-20">

@@ -13,28 +13,44 @@ function reducer (state: State, action: Action) {
   const { type } = action
   if(type === 'INTERCHANGE_LANGUAGES') {
     if(state.fromLanguage === 'Auto') return state
+    const loading = state.userText !== ''
+
     return {
       ...state,
+      loading,
+      resultText: '',
       fromLanguage: state.toLanguage,
       toLanguage: state.fromLanguage
     }
   }
   if(type === 'SET_FROM_LANGUAGES') {
+    if(state.fromLanguage === action.payload) return state
+    const loading = state.userText !== ''
+
     return {
       ...state,
-      fromLanguage: action.payload
+      fromLanguage: action.payload,
+      resultText: '',
+      loading
     }
   }
   if(type ==='SET_TO_LANGUAGES') {
+    if(state.toLanguage === action.payload) return state
+    const loading = state.userText !== ''
+
     return {
       ...state,
-      toLanguage: action.payload
+      toLanguage: action.payload,
+      resultText: '',
+      loading
     }
   }
   if(type === 'SET_USER_TEXT') {
+    const loading = action.payload !== ''
+  
     return {
       ...state,
-      loading: true,
+      loading,
       userText: action.payload,
       resultText: ''
     }
